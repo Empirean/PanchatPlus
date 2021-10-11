@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "682928466778",
+    "project_id": "panchatplus",
+    "storage_bucket": "panchatplus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682928466778:android:e37de6d17d25e337a56163",
+        "android_client_info": {
+          "package_name": "com.hamunchi.panchat_plus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682928466778-reav2u9tkclunkce89jf73jii4fpocf5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfX6DF0P3EGAWHfjED6bBXmMfk5z_-xZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682928466778-reav2u9tkclunkce89jf73jii4fpocf5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
