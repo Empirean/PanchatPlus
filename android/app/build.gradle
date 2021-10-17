@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         applicationId "com.hamunchi.panchat_plus"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
