@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/userinfo.dart';
+import 'package:panchat_plus/pages/authentication/authentication.dart';
 import 'package:provider/provider.dart';
 
+import 'authentication/login/login.dart';
 import 'home/home.dart';
-import 'login/login.dart';
+
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -20,8 +22,8 @@ class _WrapperState extends State<Wrapper> {
 
     final userInfo = Provider.of<PanchatUserInfo?>(context);
 
-    if (userInfo != null) {
-      return const Login();
+    if (userInfo == null) {
+      return const Authentication();
     }
     else {
       return const Home();

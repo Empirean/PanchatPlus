@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       initialData: null,
       value: AuthenticationService().userInfo,
       child: const MaterialApp(
+        color: Colors.black,
         home: Wrapper(),
       ),
     );
