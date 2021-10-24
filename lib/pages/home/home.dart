@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:panchat_plus/services/authentication.dart';
+import 'package:panchat_plus/models/userinfo.dart';
+import 'package:panchat_plus/services/database.dart';
+import 'package:panchat_plus/shared/styles.dart';
+import 'package:provider/provider.dart';
 
 import 'main/chats.dart';
 import 'main/interactions.dart';
@@ -28,18 +31,39 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    final loginInfo = Provider.of<PanchatUserInfo>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(_title[_currentTabIndex]),
-        actions: [
-          ElevatedButton.icon(
-            onPressed: () async {
-              AuthenticationService().signOut();
-            },
-            icon: const Icon(Icons.logout),
-            label: const Text("Logout")
+        backgroundColor: Colors.black,
+        title: TextButton.icon(
+          onPressed: () {
+            Navigator.pushNamed(context, "/actions_menu");
+          },
+          icon: CircleAvatar(
+            backgroundColor: Colors.black,
+            child: StreamBuilder(
+              stream: DatabaseService(path: "PEOPLE").watchPanchatUserInfo(field:"UID", filter: loginInfo.uid),
+              builder: (context, AsyncSnapshot<PanchatUserInfo> panchatUser) {
+                if (panchatUser.hasData){
+                  return Image(
+                    image: AssetImage("assets/" + panchatUser.data!.image),
+                  );
+                }
+                else{
+                  return const Image(
+                    image: AssetImage("assets/pandi_00.png"),
+                  );
+                }
+              }
+            ),
           ),
-        ],
+          label: Text(
+            _title[_currentTabIndex],
+            style: headerStyle
+          )
+        ),
       ),
       body: _pageList[_currentTabIndex],
       bottomNavigationBar: BottomNavigationBar(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/pages/home/menu/menu.dart';
 import 'package:panchat_plus/pages/wrapper.dart';
+import 'package:panchat_plus/routes/routes.dart';
 import 'package:panchat_plus/services/authentication.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,9 +20,12 @@ class MyApp extends StatelessWidget {
     return StreamProvider.value(
       initialData: null,
       value: AuthenticationService().userInfo,
-      child: const MaterialApp(
+      child: MaterialApp(
         color: Colors.black,
-        home: Wrapper(),
+        home: const Wrapper(),
+        routes: {
+          Routes.actionsMenu : (context) => const ActionsMenu(),
+        },
       ),
     );
   }

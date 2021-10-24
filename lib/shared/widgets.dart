@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:panchat_plus/pages/authentication/login/register.dart';
 import 'package:panchat_plus/shared/sticker.dart';
 
 Widget errorCard(String _errorText) {
@@ -45,7 +44,7 @@ AlertDialog avatarListDialog = AlertDialog(
               child: CircleAvatar(
                 backgroundColor: Colors.black,
                 child: Image(
-                  image: AssetImage("assets/$stickerList[index]"),
+                  image: AssetImage("assets/${stickerList[index]}"),
                 ),
               ),
             );

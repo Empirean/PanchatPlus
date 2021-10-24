@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/services/authentication.dart';
-import 'package:panchat_plus/shared/sticker.dart';
 import 'package:panchat_plus/shared/styles.dart';
 import 'package:panchat_plus/shared/widgets.dart';
 
@@ -65,7 +65,7 @@ class _RegisterState extends State<Register> {
 
                       if (result != null) {
                         setState(() {
-                          _image = result["IMAGE"];
+                          _image = result[PanchatUserInfo.nameImage];
                         });
                       }
                     },
@@ -117,7 +117,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     decoration: fieldStyle.copyWith(
-                        hintText: "firstname"
+                        hintText: "first name"
                     ),
                     validator: (val) {
                       return val!.isNotEmpty  ? null : "enter your firstname";
@@ -128,7 +128,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     decoration: fieldStyle.copyWith(
-                        hintText: "lastname"
+                        hintText: "last name"
                     ),
                     validator: (val) {
                       return val!.isNotEmpty  ? null : "enter your lastname";

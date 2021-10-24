@@ -28,3 +28,9 @@ const TextStyle buttonTextStyle = TextStyle(
 ButtonStyle buttonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all(Colors.black),
 );
+
+// this is for headers
+const TextStyle headerStyle = TextStyle(
+  fontSize: 20,
+  color: Colors.white
+);

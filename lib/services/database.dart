@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:panchat_plus/models/userinfo.dart';
 
 class DatabaseService{
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -58,4 +58,21 @@ class DatabaseService{
     return ref.where(field, isEqualTo: filter).
       orderBy(orderBy, descending: descending).snapshots();
   }
+
+  Stream<PanchatUserInfo> watchPanchatUserInfo({ String field = "", String filter = ""}) {
+    return watchDocumentsWithFilter(field: field, filter: filter).map(_panchatUserInfoFromStream);
+  }
+
+  PanchatUserInfo _panchatUserInfoFromStream(QuerySnapshot user) {
+    return user.docs.map((doc){
+      return PanchatUserInfo(
+        uid: doc[PanchatUserInfo.nameUid] ?? "",
+        id: doc.id,
+        image: doc[PanchatUserInfo.nameImage] ?? "",
+        firstName: doc[PanchatUserInfo.nameFirstName] ?? "",
+        lastName: doc[PanchatUserInfo.nameLastName] ?? "",
+      );
+    }).toList()[0];
+  }
+
 }
