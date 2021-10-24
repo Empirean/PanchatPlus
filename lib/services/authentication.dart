@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:panchat_plus/models/userinfo.dart';
+import 'package:panchat_plus/services/database.dart';
 
 class AuthenticationService{
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -33,12 +34,30 @@ class AuthenticationService{
     }
   }
 
-  Future signUpEmail({String email = "", String password = ""}) async {
+  Future signUpEmail({
+    String email = "",
+    String password = "",
+    String firstname = "",
+    String lastname = "",
+    String image = "pandi_00.png"
+  }) async
+  {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email,
           password: password
       );
+
+      String uid = userCredential.user!.uid;
+
+      Map<String, String> data = {
+        "UID" : uid,
+        "FIRST_NAME" : firstname,
+        "LAST_NAME" : lastname,
+        "IMAGE" : image
+      };
+
+      DatabaseService(path: "PEOPLE").addEntry(data);
     }
     catch(e) {
       return e.toString();

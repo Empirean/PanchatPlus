@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/services/authentication.dart';
 
 import 'main/chats.dart';
 import 'main/interactions.dart';
@@ -30,6 +31,15 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_title[_currentTabIndex]),
+        actions: [
+          ElevatedButton.icon(
+            onPressed: () async {
+              AuthenticationService().signOut();
+            },
+            icon: const Icon(Icons.logout),
+            label: const Text("Logout")
+          ),
+        ],
       ),
       body: _pageList[_currentTabIndex],
       bottomNavigationBar: BottomNavigationBar(

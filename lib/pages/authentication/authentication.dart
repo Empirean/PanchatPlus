@@ -41,7 +41,7 @@ class _AuthenticationState extends State<Authentication> with TickerProviderStat
                       text: "Login",
                     ),
                     Tab(
-                        text: "Register"
+                      text: "Register"
                     ),
                   ],
                 ),

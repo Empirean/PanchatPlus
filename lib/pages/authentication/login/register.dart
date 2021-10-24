@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/services/authentication.dart';
+import 'package:panchat_plus/shared/sticker.dart';
 import 'package:panchat_plus/shared/styles.dart';
+import 'package:panchat_plus/shared/widgets.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -12,10 +15,12 @@ class _RegisterState extends State<Register> {
 
   String _username = "";
   String _password = "";
+  String _firstname = "";
+  String _lastname = "";
+  String _image = "pandi_00.png";
   String _errorText = "";
 
   final _formKey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +30,11 @@ class _RegisterState extends State<Register> {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
                 colors: [
-                  Colors.red,
                   Colors.blue,
+                  Colors.red,
                 ],
               ),
             ),
@@ -45,11 +50,36 @@ class _RegisterState extends State<Register> {
               child: Column(
                 children: [
                   const SizedBox(height: 10,),
-                  const CircleAvatar(
-                    backgroundColor: Colors.black,
-                    radius: 85,
-                    child: Image(
-                      image: AssetImage("assets/pandi_00.png"),
+                  Visibility(
+                    visible: _errorText.isNotEmpty ? true : false,
+                    child: errorCard(_errorText),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      dynamic result = await showDialog(
+                        context: context,
+                        builder: (_) {
+                          return avatarListDialog;
+                        }
+                      );
+
+                      if (result != null) {
+                        setState(() {
+                          _image = result["IMAGE"];
+                        });
+                      }
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.black,
+                      radius: 85,
+                      child: Image(
+                        image: AssetImage("assets/$_image"),
+                      ),
+                    ),
+                  ),
+                  const Text("Your Avatar",
+                    style: TextStyle(
+                      color: Colors.white
                     ),
                   ),
                   const SizedBox(height: 10,),
@@ -57,11 +87,55 @@ class _RegisterState extends State<Register> {
                     decoration: fieldStyle.copyWith(
                         hintText: "example@email.com"
                     ),
+                    validator: (val) {
+                      return val!.isNotEmpty  ? null : "enter an email";
+                    },
+                    onChanged: (val) {
+                      _username = val;
+                    },
                   ),
                   TextFormField(
+                    obscureText: true,
                     decoration: fieldStyle.copyWith(
                         hintText: "password"
                     ),
+                    validator: (val) {
+                      return val!.length > 6 ? null : "must be longer than 6 characters";
+                    },
+                    onChanged: (val) {
+                      _password = val;
+                    },
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: fieldStyle.copyWith(
+                        hintText: "confirm password"
+                    ),
+                    validator: (val) {
+                      return val == _password ? null : "passwords do not match";
+                    },
+                  ),
+                  TextFormField(
+                    decoration: fieldStyle.copyWith(
+                        hintText: "firstname"
+                    ),
+                    validator: (val) {
+                      return val!.isNotEmpty  ? null : "enter your firstname";
+                    },
+                    onChanged: (val) {
+                      _firstname = val;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: fieldStyle.copyWith(
+                        hintText: "lastname"
+                    ),
+                    validator: (val) {
+                      return val!.isNotEmpty  ? null : "enter your lastname";
+                    },
+                    onChanged: (val) {
+                      _lastname = val;
+                    },
                   ),
                   const SizedBox(
                     height: 20,
@@ -75,9 +149,26 @@ class _RegisterState extends State<Register> {
                         style: buttonTextStyle,
                       ),
                       onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          dynamic result = await AuthenticationService().signUpEmail(
+                            email: _username,
+                            password: _password,
+                            firstname: _firstname,
+                            lastname: _lastname,
+                            image: _image,
+                          );
 
+                          if (result is String) {
+                            setState(() {
+                              _errorText = result.toString();
+                            });
+                          }
+                        }
                       },
                     ),
+                  ),
+                  const SizedBox(
+                    height: 50,
                   ),
                 ],
               ),

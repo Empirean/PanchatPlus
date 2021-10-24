@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/services/authentication.dart';
 import 'package:panchat_plus/shared/styles.dart';
+import 'package:panchat_plus/shared/widgets.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,51 +21,94 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Colors.blue,
-              Colors.red,
-            ],
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.blue,
+                  Colors.red,
+                ],
+              ),
+            ),
           ),
-        ),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(height: 50,),
-              TextFormField(
-                decoration: fieldStyle.copyWith(
-                  hintText: "example@email.com"
-                ),
-              ),
-              TextFormField(
-                decoration: fieldStyle.copyWith(
-                  hintText: "password"
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: buttonStyle,
-                  child: const Text("Login",
-                    style: buttonTextStyle,
+          Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  const SizedBox(height: 10,),
+                  Visibility(
+                    visible: _errorText.isNotEmpty ? true : false,
+                    child: errorCard(_errorText),
                   ),
-                  onPressed: () async {
+                  const CircleAvatar(
+                    backgroundColor: Colors.black,
+                    radius: 85,
+                    child: Image(
+                      image: AssetImage("assets/pandi_32.png"),
+                    ),
+                  ),
+                  const SizedBox(height: 25,),
+                  TextFormField(
+                    decoration: fieldStyle.copyWith(
+                        hintText: "example@email.com"
+                    ),
+                    validator: (val) {
+                      return val!.isNotEmpty  ? null : "enter an email";
+                    },
+                    onChanged: (val) {
+                      _username = val;
+                    },
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: fieldStyle.copyWith(
+                        hintText: "password"
+                    ),
+                    validator: (val) {
+                      return val!.length > 6 ? null : "must be longer than 6 characters";
+                    },
+                    onChanged: (val) {
+                      _password = val;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: buttonStyle,
+                      child: const Text("Login",
+                        style: buttonTextStyle,
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          dynamic result = await AuthenticationService().signInEmail(
+                            email: _username,
+                            password: _password,
+                          );
 
-                  },
-                ),
+                          if (result is String) {
+                            setState(() {
+                              _errorText = result.toString();
+                            });
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

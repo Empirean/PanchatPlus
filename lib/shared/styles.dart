@@ -15,7 +15,7 @@ const fieldStyle = InputDecoration(
     )
   ),
   errorStyle: TextStyle(
-    color: Colors.red
+    color: Colors.white
   )
 );
 
