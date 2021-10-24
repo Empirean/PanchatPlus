@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/shared/styles.dart';
 
 import 'login/login.dart';
 import 'login/register.dart';
@@ -34,7 +35,7 @@ class _AuthenticationState extends State<Authentication> with TickerProviderStat
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(kToolbarHeight),
               child: AppBar(
-                backgroundColor: Colors.black,
+                backgroundColor: mainColor,
                 bottom: const TabBar(
                   tabs: [
                     Tab(
@@ -54,7 +55,6 @@ class _AuthenticationState extends State<Authentication> with TickerProviderStat
                 ]
             ),
           );
-
         },
       )
     );

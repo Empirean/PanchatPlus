@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/shared/styles.dart';
 
 class Chats extends StatefulWidget {
   const Chats({Key? key}) : super(key: key);
@@ -10,8 +11,12 @@ class Chats extends StatefulWidget {
 class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Chats"),
+    return Stack(
+      children: [
+        Container(
+          decoration: background
+        )
+      ],
     );
   }
 }

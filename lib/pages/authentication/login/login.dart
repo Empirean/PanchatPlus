@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:panchat_plus/services/authentication.dart';
 import 'package:panchat_plus/shared/styles.dart';
 import 'package:panchat_plus/shared/widgets.dart';
@@ -24,16 +25,7 @@ class _LoginState extends State<Login> {
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.blue,
-                  Colors.red,
-                ],
-              ),
-            ),
+            decoration: background
           ),
           Form(
             key: _formKey,
@@ -46,10 +38,10 @@ class _LoginState extends State<Login> {
                     visible: _errorText.isNotEmpty ? true : false,
                     child: errorCard(_errorText),
                   ),
-                  const CircleAvatar(
-                    backgroundColor: Colors.black,
+                  CircleAvatar(
+                    backgroundColor: mainColor,
                     radius: 85,
-                    child: Image(
+                    child: const Image(
                       image: AssetImage("assets/pandi_32.png"),
                     ),
                   ),

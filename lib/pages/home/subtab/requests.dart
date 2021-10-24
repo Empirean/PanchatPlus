@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/shared/styles.dart';
 
 class Requests extends StatefulWidget {
   const Requests({Key? key}) : super(key: key);
@@ -10,6 +11,12 @@ class Requests extends StatefulWidget {
 class _RequestsState extends State<Requests> {
   @override
   Widget build(BuildContext context) {
-    return const Text("Requests");
+    return Stack(
+      children: [
+        Container(
+          decoration: background
+        ),
+      ],
+    );
   }
 }

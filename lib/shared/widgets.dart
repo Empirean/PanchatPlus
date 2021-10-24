@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/shared/sticker.dart';
+import 'package:panchat_plus/shared/styles.dart';
 
 Widget errorCard(String _errorText) {
   return Card(
@@ -42,7 +44,7 @@ AlertDialog avatarListDialog = AlertDialog(
                 });
               },
               child: CircleAvatar(
-                backgroundColor: Colors.black,
+                backgroundColor: mainColor,
                 child: Image(
                   image: AssetImage("assets/${stickerList[index]}"),
                 ),
@@ -54,3 +56,33 @@ AlertDialog avatarListDialog = AlertDialog(
     },
   ),
 );
+
+Widget peopleTile(PanchatUserInfo person) {
+  return Card(
+    shape: const RoundedRectangleBorder(
+      side: BorderSide(
+        color: Colors.white,
+        width: 1.5,
+      ),
+    ),
+    color: mainColor,
+    child: ListTile(
+      leading: Image(
+        image: AssetImage("assets/${person.image}"),
+      ),
+      title: Text("${person.firstName} ${person.lastName}",
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+      ) ,
+      trailing: ElevatedButton.icon(
+        onPressed: () {
+
+        },
+        icon: const Icon(Icons.add),
+        label: const Text("Add")
+      )
+    ),
+  );
+}

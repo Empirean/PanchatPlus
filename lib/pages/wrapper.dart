@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/pages/authentication/authentication.dart';
-import 'package:panchat_plus/services/authentication.dart';
 import 'package:provider/provider.dart';
 
-import 'authentication/login/login.dart';
 import 'home/home.dart';
 
 

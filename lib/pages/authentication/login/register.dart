@@ -28,16 +28,7 @@ class _RegisterState extends State<Register> {
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Colors.blue,
-                  Colors.red,
-                ],
-              ),
-            ),
+            decoration: background,
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -70,7 +61,7 @@ class _RegisterState extends State<Register> {
                       }
                     },
                     child: CircleAvatar(
-                      backgroundColor: Colors.black,
+                      backgroundColor: mainColor,
                       radius: 85,
                       child: Image(
                         image: AssetImage("assets/$_image"),
@@ -116,6 +107,7 @@ class _RegisterState extends State<Register> {
                     },
                   ),
                   TextFormField(
+                    maxLength: 15,
                     decoration: fieldStyle.copyWith(
                         hintText: "first name"
                     ),
@@ -127,6 +119,7 @@ class _RegisterState extends State<Register> {
                     },
                   ),
                   TextFormField(
+                    maxLength: 15,
                     decoration: fieldStyle.copyWith(
                         hintText: "last name"
                     ),

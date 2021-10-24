@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:panchat_plus/models/userinfo.dart';
+import 'package:panchat_plus/routes/paths.dart';
 import 'package:panchat_plus/services/database.dart';
 
 class AuthenticationService{
@@ -57,7 +58,7 @@ class AuthenticationService{
         "IMAGE" : image
       };
 
-      DatabaseService(path: "PEOPLE").addEntry(data);
+      DatabaseService(path: Paths.people).addEntry(data);
     }
     catch(e) {
       return e.toString();

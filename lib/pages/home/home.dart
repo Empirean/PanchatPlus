@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/userinfo.dart';
+import 'package:panchat_plus/routes/paths.dart';
+import 'package:panchat_plus/routes/routes.dart';
 import 'package:panchat_plus/services/database.dart';
+import 'package:panchat_plus/shared/procedures.dart';
 import 'package:panchat_plus/shared/styles.dart';
 import 'package:provider/provider.dart';
 
@@ -36,19 +39,25 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: mainColor,
         title: TextButton.icon(
           onPressed: () {
-            Navigator.pushNamed(context, "/actions_menu");
+            Navigator.pushNamed(context, Routes.actionsMenu);
           },
           icon: CircleAvatar(
             backgroundColor: Colors.black,
             child: StreamBuilder(
-              stream: DatabaseService(path: "PEOPLE").watchPanchatUserInfo(field:"UID", filter: loginInfo.uid),
+              stream: DatabaseService(path: Paths.people).watchPanchatUserInfo(field:PanchatUserInfo.nameUid, filter: loginInfo.uid),
               builder: (context, AsyncSnapshot<PanchatUserInfo> panchatUser) {
                 if (panchatUser.hasData){
-                  return Image(
-                    image: AssetImage("assets/" + panchatUser.data!.image),
+
+                  return FutureBuilder(
+                    future: storeUserId(panchatUser.data!.id),
+                    builder: (context, _) {
+                      return Image(
+                        image: AssetImage("assets/" + panchatUser.data!.image),
+                      );
+                    },
                   );
                 }
                 else{
@@ -67,6 +76,9 @@ class _HomeState extends State<Home> {
       ),
       body: _pageList[_currentTabIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: mainColor,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.chat),
@@ -88,4 +100,5 @@ class _HomeState extends State<Home> {
       _currentTabIndex = index;
     });
   }
+
 }
