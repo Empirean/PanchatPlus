@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/services/authentication.dart';
-import 'package:panchat_plus/shared/styles.dart';
-import 'package:panchat_plus/shared/widgets.dart';
+import 'package:panchat_plus/shared/styles/input.dart';
+import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/widget/error.dart';
+import 'package:panchat_plus/shared/widget/pandi.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -43,14 +45,14 @@ class _RegisterState extends State<Register> {
                   const SizedBox(height: 10,),
                   Visibility(
                     visible: _errorText.isNotEmpty ? true : false,
-                    child: errorCard(_errorText),
+                    child: ErrorCard(errorText: _errorText),
                   ),
                   GestureDetector(
                     onTap: () async {
                       dynamic result = await showDialog(
                         context: context,
                         builder: (_) {
-                          return avatarListDialog;
+                          return const PandiDialog();
                         }
                       );
 
@@ -75,7 +77,7 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 10,),
                   TextFormField(
-                    decoration: fieldStyle.copyWith(
+                    decoration: InputStyle.decoration.copyWith(
                         hintText: "example@email.com"
                     ),
                     validator: (val) {
@@ -87,7 +89,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     obscureText: true,
-                    decoration: fieldStyle.copyWith(
+                    decoration: InputStyle.decoration.copyWith(
                         hintText: "password"
                     ),
                     validator: (val) {
@@ -99,7 +101,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     obscureText: true,
-                    decoration: fieldStyle.copyWith(
+                    decoration: InputStyle.decoration.copyWith(
                         hintText: "confirm password"
                     ),
                     validator: (val) {
@@ -108,7 +110,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     maxLength: 15,
-                    decoration: fieldStyle.copyWith(
+                    decoration: InputStyle.decoration.copyWith(
                         hintText: "first name"
                     ),
                     validator: (val) {
@@ -120,7 +122,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     maxLength: 15,
-                    decoration: fieldStyle.copyWith(
+                    decoration: InputStyle.decoration.copyWith(
                         hintText: "last name"
                     ),
                     validator: (val) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/services/authentication.dart';
-import 'package:panchat_plus/shared/styles.dart';
+import 'package:panchat_plus/shared/styles/styles.dart';
 
 class ActionsMenu extends StatelessWidget {
   const ActionsMenu({Key? key}) : super(key: key);

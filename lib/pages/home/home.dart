@@ -3,8 +3,8 @@ import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/routes/paths.dart';
 import 'package:panchat_plus/routes/routes.dart';
 import 'package:panchat_plus/services/database.dart';
-import 'package:panchat_plus/shared/procedures.dart';
-import 'package:panchat_plus/shared/styles.dart';
+import 'package:panchat_plus/services/storage.dart';
+import 'package:panchat_plus/shared/styles/styles.dart';
 import 'package:provider/provider.dart';
 
 import 'main/chats.dart';
@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
                 if (panchatUser.hasData){
 
                   return FutureBuilder(
-                    future: storeUserId(panchatUser.data!.id),
+                    future: LocalStorage().storeSharedPrefUserId(panchatUser.data!.id),
                     builder: (context, _) {
                       return Image(
                         image: AssetImage("assets/" + panchatUser.data!.image),

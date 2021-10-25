@@ -3,9 +3,9 @@ import 'package:panchat_plus/models/friends.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/routes/paths.dart';
 import 'package:panchat_plus/services/database.dart';
-import 'package:panchat_plus/shared/procedures.dart';
-import 'package:panchat_plus/shared/styles.dart';
-import 'package:panchat_plus/shared/widgets.dart';
+import 'package:panchat_plus/services/storage.dart';
+import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/widget/people.dart';
 import 'package:provider/provider.dart';
 
 
@@ -29,7 +29,7 @@ class _PeopleState extends State<People> {
           decoration: background,
         ),
         FutureBuilder(
-          future: getUserId(),
+          future: LocalStorage().getSharedPrefUserId(),
           builder: (context, uid) {
             if (uid.hasData) {
               String id = uid.data!.toString();
@@ -50,7 +50,7 @@ class _PeopleState extends State<People> {
                           return ListView.builder(
                               itemCount: panchatUser.data!.length,
                               itemBuilder: (context, index) {
-                                return peopleTile(panchatUser.data![index]);
+                                return PeopleTile(person: panchatUser.data![index]);
                               });
                         }
                         else {

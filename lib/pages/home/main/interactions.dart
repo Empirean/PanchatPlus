@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/pages/home/subtab/people.dart';
 import 'package:panchat_plus/pages/home/subtab/requests.dart';
-import 'package:panchat_plus/shared/styles.dart';
+import 'package:panchat_plus/shared/styles/styles.dart';
 
 class Interactions extends StatefulWidget {
   const Interactions({Key? key}) : super(key: key);

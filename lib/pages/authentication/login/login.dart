@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:panchat_plus/services/authentication.dart';
-import 'package:panchat_plus/shared/styles.dart';
-import 'package:panchat_plus/shared/widgets.dart';
+import 'package:panchat_plus/shared/styles/input.dart';
+import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/widget/error.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 10,),
                   Visibility(
                     visible: _errorText.isNotEmpty ? true : false,
-                    child: errorCard(_errorText),
+                    child: ErrorCard(errorText: _errorText),
                   ),
                   CircleAvatar(
                     backgroundColor: mainColor,
@@ -47,7 +48,7 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 25,),
                   TextFormField(
-                    decoration: fieldStyle.copyWith(
+                    decoration: InputStyle.decoration.copyWith(
                         hintText: "example@email.com"
                     ),
                     validator: (val) {
@@ -59,7 +60,7 @@ class _LoginState extends State<Login> {
                   ),
                   TextFormField(
                     obscureText: true,
-                    decoration: fieldStyle.copyWith(
+                    decoration: InputStyle.decoration.copyWith(
                         hintText: "password"
                     ),
                     validator: (val) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:panchat_plus/shared/styles.dart';
+import 'package:panchat_plus/shared/styles/styles.dart';
 
 class Requests extends StatefulWidget {
   const Requests({Key? key}) : super(key: key);
