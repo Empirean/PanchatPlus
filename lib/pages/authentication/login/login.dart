@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:panchat_plus/services/authentication.dart';
+import 'package:panchat_plus/shared/styles/background.dart';
+import 'package:panchat_plus/shared/styles/button.dart';
 import 'package:panchat_plus/shared/styles/input.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/color.dart';
 import 'package:panchat_plus/shared/widget/error.dart';
 
 class Login extends StatefulWidget {
@@ -26,7 +28,7 @@ class _LoginState extends State<Login> {
       body: Stack(
         children: [
           Container(
-            decoration: background
+            decoration: PanchatBackground.gradient
           ),
           Form(
             key: _formKey,
@@ -40,7 +42,7 @@ class _LoginState extends State<Login> {
                     child: ErrorCard(errorText: _errorText),
                   ),
                   CircleAvatar(
-                    backgroundColor: mainColor,
+                    backgroundColor: PanchatColors.mainColor,
                     radius: 85,
                     child: const Image(
                       image: AssetImage("assets/pandi_32.png"),
@@ -48,7 +50,7 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 25,),
                   TextFormField(
-                    decoration: InputStyle.decoration.copyWith(
+                    decoration: PanchatInputStyle.decoration.copyWith(
                         hintText: "example@email.com"
                     ),
                     validator: (val) {
@@ -60,7 +62,7 @@ class _LoginState extends State<Login> {
                   ),
                   TextFormField(
                     obscureText: true,
-                    decoration: InputStyle.decoration.copyWith(
+                    decoration: PanchatInputStyle.decoration.copyWith(
                         hintText: "password"
                     ),
                     validator: (val) {
@@ -77,9 +79,9 @@ class _LoginState extends State<Login> {
                     height: 50,
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: buttonStyle,
+                      style: PanchatButtonStyle().mainButtonStyle,
                       child: const Text("Login",
-                        style: buttonTextStyle,
+                        // style: PanchatButtonStyle().mainButtonTextStyle,
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {

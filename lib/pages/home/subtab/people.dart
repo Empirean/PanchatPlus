@@ -4,7 +4,7 @@ import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/routes/paths.dart';
 import 'package:panchat_plus/services/database.dart';
 import 'package:panchat_plus/services/storage.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/background.dart';
 import 'package:panchat_plus/shared/widget/people.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,7 @@ class _PeopleState extends State<People> {
     return Stack(
       children: [
         Container(
-          decoration: background,
+          decoration: PanchatBackground.gradient
         ),
         FutureBuilder(
           future: LocalStorage().getSharedPrefUserId(),

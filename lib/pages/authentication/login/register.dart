@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/services/authentication.dart';
+import 'package:panchat_plus/shared/styles/background.dart';
+import 'package:panchat_plus/shared/styles/button.dart';
 import 'package:panchat_plus/shared/styles/input.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/color.dart';
 import 'package:panchat_plus/shared/widget/error.dart';
 import 'package:panchat_plus/shared/widget/pandi.dart';
 
@@ -30,7 +32,7 @@ class _RegisterState extends State<Register> {
       body: Stack(
         children: [
           Container(
-            decoration: background,
+            decoration: PanchatBackground.gradient,
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -63,7 +65,7 @@ class _RegisterState extends State<Register> {
                       }
                     },
                     child: CircleAvatar(
-                      backgroundColor: mainColor,
+                      backgroundColor: PanchatColors.mainColor,
                       radius: 85,
                       child: Image(
                         image: AssetImage("assets/$_image"),
@@ -77,7 +79,7 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 10,),
                   TextFormField(
-                    decoration: InputStyle.decoration.copyWith(
+                    decoration: PanchatInputStyle.decoration.copyWith(
                         hintText: "example@email.com"
                     ),
                     validator: (val) {
@@ -89,7 +91,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     obscureText: true,
-                    decoration: InputStyle.decoration.copyWith(
+                    decoration: PanchatInputStyle.decoration.copyWith(
                         hintText: "password"
                     ),
                     validator: (val) {
@@ -101,7 +103,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     obscureText: true,
-                    decoration: InputStyle.decoration.copyWith(
+                    decoration: PanchatInputStyle.decoration.copyWith(
                         hintText: "confirm password"
                     ),
                     validator: (val) {
@@ -110,7 +112,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     maxLength: 15,
-                    decoration: InputStyle.decoration.copyWith(
+                    decoration: PanchatInputStyle.decoration.copyWith(
                         hintText: "first name"
                     ),
                     validator: (val) {
@@ -122,7 +124,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextFormField(
                     maxLength: 15,
-                    decoration: InputStyle.decoration.copyWith(
+                    decoration: PanchatInputStyle.decoration.copyWith(
                         hintText: "last name"
                     ),
                     validator: (val) {
@@ -139,9 +141,9 @@ class _RegisterState extends State<Register> {
                     height: 50,
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: buttonStyle,
-                      child: const Text("Register",
-                        style: buttonTextStyle,
+                      style: PanchatButtonStyle().mainButtonStyle,
+                      child: Text("Register",
+                        style: PanchatButtonStyle().mainButtonTextStyle,
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {

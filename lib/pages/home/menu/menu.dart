@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/services/authentication.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/appbar.dart';
+import 'package:panchat_plus/shared/styles/button.dart';
+import 'package:panchat_plus/shared/styles/color.dart';
 
 class ActionsMenu extends StatelessWidget {
   const ActionsMenu({Key? key}) : super(key: key);
@@ -9,8 +11,8 @@ class ActionsMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mainColor,
-        title: const Text("Actions", style: headerStyle,),
+        backgroundColor: PanchatColors.mainColor,
+        title: const Text("Actions", style: PanchatAppBar.textStyle),
       ),
       body: Stack(
         children: [
@@ -32,9 +34,9 @@ class ActionsMenu extends StatelessWidget {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  style: buttonStyle,
-                  child: const Text("Logout",
-                    style: buttonTextStyle,
+                  style: PanchatButtonStyle().mainButtonStyle,
+                  child: Text("Logout",
+                    style: PanchatButtonStyle().mainButtonTextStyle,
                   ),
                   onPressed: () async {
                     AuthenticationService().signOut();

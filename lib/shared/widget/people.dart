@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/userinfo.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/color.dart';
 
 class PeopleTile extends StatelessWidget {
   const PeopleTile({Key? key, required this.person}) : super(key: key);
@@ -16,7 +16,7 @@ class PeopleTile extends StatelessWidget {
           width: 1.5,
         ),
       ),
-      color: mainColor,
+      color: PanchatColors.mainColor,
       child: ListTile(
           leading: Image(
             image: AssetImage("assets/${person.image}"),

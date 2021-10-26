@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/background.dart';
 
 class Chats extends StatefulWidget {
   const Chats({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class _ChatsState extends State<Chats> {
     return Stack(
       children: [
         Container(
-          decoration: background
+          decoration: PanchatBackground.gradient
         )
       ],
     );

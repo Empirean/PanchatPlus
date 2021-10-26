@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class InputStyle {
+class PanchatInputStyle {
   static const decoration = InputDecoration(
       filled: true,
       fillColor: Colors.white,

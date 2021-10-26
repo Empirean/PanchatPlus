@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/shared/data/sticker.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/color.dart';
 
 class PandiDialog extends StatelessWidget {
   const PandiDialog({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class PandiDialog extends StatelessWidget {
                     });
                   },
                   child: CircleAvatar(
-                    backgroundColor: mainColor,
+                    backgroundColor: PanchatColors.mainColor,
                     child: Image(
                       image: AssetImage("assets/${Assets.stickerList[index]}"),
                     ),

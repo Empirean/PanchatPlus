@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/pages/home/subtab/people.dart';
 import 'package:panchat_plus/pages/home/subtab/requests.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/color.dart';
 
 class Interactions extends StatefulWidget {
   const Interactions({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _InteractionsState extends State<Interactions> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: AppBar(
-            backgroundColor: mainColor,
+            backgroundColor: PanchatColors.mainColor,
             bottom: const TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.email),),

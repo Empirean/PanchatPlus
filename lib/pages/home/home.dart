@@ -4,7 +4,8 @@ import 'package:panchat_plus/routes/paths.dart';
 import 'package:panchat_plus/routes/routes.dart';
 import 'package:panchat_plus/services/database.dart';
 import 'package:panchat_plus/services/storage.dart';
-import 'package:panchat_plus/shared/styles/styles.dart';
+import 'package:panchat_plus/shared/styles/appbar.dart';
+import 'package:panchat_plus/shared/styles/color.dart';
 import 'package:provider/provider.dart';
 
 import 'main/chats.dart';
@@ -39,7 +40,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mainColor,
+        backgroundColor: PanchatColors.mainColor,
         title: TextButton.icon(
           onPressed: () {
             Navigator.pushNamed(context, Routes.actionsMenu);
@@ -70,13 +71,13 @@ class _HomeState extends State<Home> {
           ),
           label: Text(
             _title[_currentTabIndex],
-            style: headerStyle
+            style: PanchatAppBar.textStyle
           )
         ),
       ),
       body: _pageList[_currentTabIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: mainColor,
+        backgroundColor: PanchatColors.mainColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
         items: [
