@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
 
     final loginInfo = Provider.of<PanchatUserInfo>(context, listen: false);
+    String _path = Paths.people;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +49,7 @@ class _HomeState extends State<Home> {
           icon: CircleAvatar(
             backgroundColor: Colors.black,
             child: StreamBuilder(
-              stream: DatabaseService(path: Paths.people).watchPanchatUserInfo(field:PanchatUserInfo.nameUid, filter: loginInfo.uid),
+              stream: DatabaseService(path: _path).watchPanchatUserInfo(field:PanchatUserInfo.nameUid, filter: loginInfo.uid),
               builder: (context, AsyncSnapshot<PanchatUserInfo> panchatUser) {
                 if (panchatUser.hasData){
 

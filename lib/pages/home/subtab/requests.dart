@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/services/storage.dart';
 import 'package:panchat_plus/shared/styles/background.dart';
 
 class Requests extends StatefulWidget {
@@ -15,6 +16,17 @@ class _RequestsState extends State<Requests> {
       children: [
         Container(
           decoration: PanchatBackground.gradient
+        ),
+        FutureBuilder(
+          future: LocalStorage().getSharedPrefUserId(),
+          builder: (context, sid) {
+            if (sid.hasData) {
+              return Container();
+            }
+            else {
+              return Container();
+            }
+          }
         ),
       ],
     );

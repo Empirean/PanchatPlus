@@ -30,12 +30,12 @@ class _PeopleState extends State<People> {
         ),
         FutureBuilder(
           future: LocalStorage().getSharedPrefUserId(),
-          builder: (context, uid) {
-            if (uid.hasData) {
-              String id = uid.data!.toString();
-
+          builder: (context, sid) {
+            if (sid.hasData) {
+              String id = sid.data!.toString();
+              String _path = Paths.people + "/$id/" + Paths.friends;
               return StreamBuilder(
-                stream: DatabaseService(path: Paths.people + "/$id/" + Paths.friends).watchAllFriends(),
+                stream: DatabaseService(path: _path).watchAllFriends(),
                 builder: (context, AsyncSnapshot<List<PanchatFriend>> friends) {
                   if (friends.hasData) {
                     List<String> friendsList = friends.data!.map((e) => e.uid).toList();

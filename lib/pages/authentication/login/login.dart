@@ -80,8 +80,8 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: PanchatButtonStyle().mainButtonStyle,
-                      child: const Text("Login",
-                        // style: PanchatButtonStyle().mainButtonTextStyle,
+                      child: Text("Login",
+                        style: PanchatButtonStyle().mainButtonTextStyle,
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
