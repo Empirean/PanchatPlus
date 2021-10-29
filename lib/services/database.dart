@@ -123,4 +123,17 @@ class DatabaseService{
     }).toList()[0];
   }
 
+  Stream<List<PanchatRequest>> watchAllRequests() {
+    return watchAllDocuments().map(_panchatRequestListFromStream);
+  }
+
+  List<PanchatRequest> _panchatRequestListFromStream(QuerySnapshot request) {
+    return request.docs.map((doc) {
+      return PanchatRequest(
+        uid: doc[PanchatRequest.uidName] ?? "",
+        id: doc.id
+      );
+    }).toList();
+
+  }
 }

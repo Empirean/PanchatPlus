@@ -13,4 +13,8 @@ class PanchatButtonStyle{
   TextStyle mainButtonTextStyle = const TextStyle(
     fontSize: 20,
   );
+
+  ButtonStyle negativeButtonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(PanchatColors.negativeColor),
+  );
 }
