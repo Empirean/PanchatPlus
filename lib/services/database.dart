@@ -33,8 +33,12 @@ class DatabaseService{
     return ref.where(field, isEqualTo: filter).snapshots();
   }
 
-  Stream<QuerySnapshot> watchDocumentsButWithFilter({String field = "", List<String> filter = const []}) {
+  Stream<QuerySnapshot> watchDocumentsButWithFilterRange({String field = "", List<String> filter = const []}) {
     return ref.where(field, whereNotIn: filter, ).snapshots();
+  }
+
+  Stream<QuerySnapshot> watchDocumentsWithFilterRange({String field = "", List<String> filter = const []}) {
+    return ref.where(field, whereIn: filter, ).snapshots();
   }
 
   Future<QuerySnapshot> getAllDocuments() async {
@@ -70,8 +74,12 @@ class DatabaseService{
     return watchDocumentsWithFilter(field: field, filter: filter).map(_panchatUserInfoFromStream);
   }
 
-  Stream<List<PanchatUserInfo>> watchOtherPanchatUserInfo({ String field = "", List<String> filter = const []}) {
-    return watchDocumentsButWithFilter(field: field, filter: filter).map(_panchatUserInfoListFromStream);
+  Stream<List<PanchatUserInfo>> watchOtherPanchatUserInfoRange({ String field = "", List<String> filter = const []}) {
+    return watchDocumentsButWithFilterRange(field: field, filter: filter).map(_panchatUserInfoListFromStream);
+  }
+
+  Stream<List<PanchatUserInfo>> watchPanchatUserInfoRange({ String field = "", List<String> filter = const []}) {
+    return watchDocumentsWithFilterRange(field: field, filter: filter).map(_panchatUserInfoListFromStream);
   }
 
   PanchatUserInfo _panchatUserInfoFromStream(QuerySnapshot user) {

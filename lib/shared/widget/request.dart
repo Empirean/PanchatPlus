@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panchat_plus/models/channels.dart';
 import 'package:panchat_plus/models/request.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/routes/paths.dart';
@@ -78,6 +79,18 @@ class RequestTile extends StatelessWidget {
                             DatabaseService(path: _friendPath).addEntry(userData);
                             DatabaseService(path: _userPath).addEntry(friendData);
                             DatabaseService(path: _path).deleteEntry(request.id);
+
+                            List<String> participants = [
+                              loginInfo.uid,
+                              person.uid
+                            ];
+
+                            Map<String, dynamic> channelData = {
+                              PanchatChannels.participantsName : participants
+                            };
+
+                            DatabaseService(path: Paths.channels).addEntry(channelData);
+
                           },
                           icon: const Icon(Icons.add),
                           label: const Text("Accept"),

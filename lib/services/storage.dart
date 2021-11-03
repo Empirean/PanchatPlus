@@ -5,6 +5,7 @@ class LocalStorage {
   Future storeSharedPrefUserId(String id) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString(PanchatKeys.keyUid, id);
+    return true;
   }
 
   Future<String> getSharedPrefUserId() async {

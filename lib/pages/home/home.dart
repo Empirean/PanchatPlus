@@ -3,7 +3,6 @@ import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/routes/paths.dart';
 import 'package:panchat_plus/routes/routes.dart';
 import 'package:panchat_plus/services/database.dart';
-import 'package:panchat_plus/services/storage.dart';
 import 'package:panchat_plus/shared/styles/appbar.dart';
 import 'package:panchat_plus/shared/styles/color.dart';
 import 'package:provider/provider.dart';
@@ -52,14 +51,8 @@ class _HomeState extends State<Home> {
               stream: DatabaseService(path: _path).watchPanchatUserInfo(field:PanchatUserInfo.nameUid, filter: loginInfo.uid),
               builder: (context, AsyncSnapshot<PanchatUserInfo> panchatUser) {
                 if (panchatUser.hasData){
-
-                  return FutureBuilder(
-                    future: LocalStorage().storeSharedPrefUserId(panchatUser.data!.id),
-                    builder: (context, _) {
-                      return Image(
-                        image: AssetImage("assets/" + panchatUser.data!.image),
-                      );
-                    },
+                  return Image(
+                    image: AssetImage("assets/" + panchatUser.data!.image),
                   );
                 }
                 else{

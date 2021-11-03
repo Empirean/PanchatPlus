@@ -41,7 +41,7 @@ class _PeopleState extends State<People> {
                     List<String> friendsList = friends.data!.map((e) => e.uid).toList();
                     friendsList.add(loginInfo.uid);
                     return StreamBuilder(
-                      stream: DatabaseService(path: Paths.people).watchOtherPanchatUserInfo(
+                      stream: DatabaseService(path: Paths.people).watchOtherPanchatUserInfoRange(
                           field: PanchatFriend.uidName,
                           filter: friendsList
                       ),
