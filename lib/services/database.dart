@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:panchat_plus/models/messages.dart';
 
 class DatabaseService{
   //==========================================================================//
@@ -51,20 +50,4 @@ class DatabaseService{
     return _ref.where(field, arrayContainsAny: [filter]).get();
   }
 
-  //==========================================================================//
-  Stream<List<PanchatMessage>> watchAllMessages() {
-    return watchAllDocuments().map(_panchatMessageListFromStream);
-  }
-
-  List<PanchatMessage> _panchatMessageListFromStream(QuerySnapshot request) {
-    return request.docs.map((doc) {
-      return PanchatMessage(
-        message: doc[PanchatMessage.messageName] ?? "",
-        sender: doc[PanchatMessage.senderName] ?? "",
-        timestamp: doc[PanchatMessage.timestampName] ?? DateTime.now(),
-        id: doc.id
-      );
-    }).toList();
-  }
-  //==========================================================================//
 }
