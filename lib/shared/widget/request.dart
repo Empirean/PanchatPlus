@@ -81,8 +81,8 @@ class RequestTile extends StatelessWidget {
                             DatabaseService(path: _path).deleteEntry(request.id);
 
                             List<String> participants = [
-                              loginInfo.uid,
-                              person.uid
+                              loginInfo.uid + request.uid,
+                              request.uid + loginInfo.uid
                             ];
 
                             Map<String, dynamic> channelData = {

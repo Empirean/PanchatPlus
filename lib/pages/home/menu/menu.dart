@@ -39,7 +39,7 @@ class ActionsMenu extends StatelessWidget {
                     style: PanchatButtonStyle().mainButtonTextStyle,
                   ),
                   onPressed: () async {
-                    AuthenticationService().signOut();
+                    await AuthenticationService().signOut();
                     Navigator.pop(context);
                   }
                 ),

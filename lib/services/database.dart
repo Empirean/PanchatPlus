@@ -1,52 +1,62 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:panchat_plus/models/friends.dart';
+import 'package:panchat_plus/models/messages.dart';
 import 'package:panchat_plus/models/request.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 
 class DatabaseService{
+  //==========================================================================//
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
-  late CollectionReference ref;
+  late CollectionReference _ref;
   String path;
 
   DatabaseService({this.path = ""}) {
-    ref = _firebaseFirestore.collection(path);
+    _ref = _firebaseFirestore.collection(path);
   }
 
   Future addEntry(Map<String, dynamic> data) async {
-    return await ref.add(data);
+    return await _ref.add(data);
   }
 
   Future updateEntry(Map<String, dynamic> data, String id) async {
-    return await ref.doc(id).update(data);
+    return await _ref.doc(id).update(data);
   }
 
   Future deleteEntry(String id) async {
-    return await ref.doc(id).delete();
+    return await _ref.doc(id).delete();
+  }
+  //==========================================================================//
+
+  Future<QuerySnapshot> getChannelInfo({String field = "", String filter = ""}) {
+    return _ref.where(field, arrayContainsAny: [filter]).get();
   }
 
+  //==========================================================================//
+
   Future<QuerySnapshot> getDocumentsWithFilter({String field = "", String filter = ""}) async {
-    return ref.where(field, isEqualTo: filter).get();
+    return _ref.where(field, isEqualTo: filter).get();
   }
 
   Stream<QuerySnapshot> watchDocumentsWithFilter({String field = "", String filter = ""}) {
-    return ref.where(field, isEqualTo: filter).snapshots();
+    return _ref.where(field, isEqualTo: filter).snapshots();
   }
 
   Stream<QuerySnapshot> watchDocumentsButWithFilterRange({String field = "", List<String> filter = const []}) {
-    return ref.where(field, whereNotIn: filter, ).snapshots();
+    return _ref.where(field, whereNotIn: filter, ).snapshots();
   }
 
   Stream<QuerySnapshot> watchDocumentsWithFilterRange({String field = "", List<String> filter = const []}) {
-    return ref.where(field, whereIn: filter, ).snapshots();
+    return _ref.where(field, whereIn: filter, ).snapshots();
   }
 
+
+
   Future<QuerySnapshot> getAllDocuments() async {
-    return ref.get();
+    return _ref.get();
   }
 
   Stream<QuerySnapshot> watchAllDocuments() {
-    return ref.snapshots();
+    return _ref.snapshots();
   }
 
   Future<QuerySnapshot> getDocumentsWithFilterAndOrder({
@@ -55,7 +65,7 @@ class DatabaseService{
       String field = "",
       String filter = ""
   }) async {
-    return ref.where(field, isEqualTo: filter).
+    return _ref.where(field, isEqualTo: filter).
       orderBy(orderBy,descending: descending ).get();
   }
 
@@ -65,7 +75,7 @@ class DatabaseService{
       String field = "",
       String filter = ""
   }) {
-    return ref.where(field, isEqualTo: filter).
+    return _ref.where(field, isEqualTo: filter).
       orderBy(orderBy, descending: descending).snapshots();
   }
 
@@ -142,6 +152,40 @@ class DatabaseService{
         id: doc.id
       );
     }).toList();
-
   }
+
+  Stream<List<PanchatMessage>> watchAllMessages() {
+    return watchAllDocuments().map(_panchatMessageListFromStream);
+  }
+
+  List<PanchatMessage> _panchatMessageListFromStream(QuerySnapshot request) {
+    return request.docs.map((doc) {
+      return PanchatMessage(
+        message: doc[PanchatMessage.messageName] ?? "",
+        sender: doc[PanchatMessage.senderName] ?? "",
+        timestamp: doc[PanchatMessage.timestampName] ?? DateTime.now(),
+        id: doc.id
+      );
+    }).toList();
+  }
+
+  /*
+  Stream<PanchatChannels> watchChannelInfo({
+    String field = "",
+    List<String> filter = const [],
+  }) {
+    return watchDocumentWithArrayFilter(
+      field: field,
+      filter: filter,
+    ).map(_panchatChannelInfo);
+  }
+
+  PanchatChannels _panchatChannelInfo(QuerySnapshot request) {
+    return request.docs.map((doc) {
+      return PanchatChannels(
+          id: doc.id
+      );
+    }).toList()[0];
+  }
+  */
 }
