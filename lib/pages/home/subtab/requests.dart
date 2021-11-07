@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/request.dart';
 import 'package:panchat_plus/routes/paths.dart';
-import 'package:panchat_plus/services/database.dart';
 import 'package:panchat_plus/services/storage.dart';
 import 'package:panchat_plus/shared/styles/background.dart';
 import 'package:panchat_plus/shared/widget/request.dart';
@@ -31,7 +30,7 @@ class _RequestsState extends State<Requests> {
               String id = sid.data!.toString();
               String _path = Paths.people + "/$id/" + Paths.requests;
               return StreamBuilder(
-                stream: DatabaseService(path: _path).watchAllRequests(),
+                stream: PanchatRequest().watchAllPanchatRequests(firestorePath: _path),
                 builder: (context, AsyncSnapshot<List<PanchatRequest>> request) {
                   if (request.hasData) {
                     return ListView.builder(

@@ -38,9 +38,8 @@ class PeopleTile extends StatelessWidget {
           ),
         ) ,
         trailing: StreamBuilder(
-          stream: DatabaseService(path:_path).watchPanchatRequest(field: PanchatRequest.uidName, filter: loginInfo.uid),
+          stream: PanchatRequest().watchPanchatRequest(firestorePath: _path,field: PanchatRequest.uidName, filter: loginInfo.uid),
           builder: (context, AsyncSnapshot<PanchatRequest> request) {
-
             if (request.hasData) {
               return ElevatedButton.icon(
                 style: PanchatButtonStyle().negativeButtonStyle,
