@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/routes/paths.dart';
 import 'package:panchat_plus/routes/routes.dart';
-import 'package:panchat_plus/services/database.dart';
 import 'package:panchat_plus/shared/styles/appbar.dart';
 import 'package:panchat_plus/shared/styles/color.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +47,7 @@ class _HomeState extends State<Home> {
           icon: CircleAvatar(
             backgroundColor: Colors.black,
             child: StreamBuilder(
-              stream: DatabaseService(path: _path).watchPanchatUserInfo(field:PanchatUserInfo.nameUid, filter: loginInfo.uid),
+              stream: PanchatUserInfo().watchPanchatUserInfo(firestorePath: _path, field:PanchatUserInfo.nameUid, filter: loginInfo.uid),
               builder: (context, AsyncSnapshot<PanchatUserInfo> panchatUser) {
                 if (panchatUser.hasData){
                   return Image(

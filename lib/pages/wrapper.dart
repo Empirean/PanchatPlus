@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/pages/authentication/authentication.dart';
 import 'package:panchat_plus/routes/paths.dart';
-import 'package:panchat_plus/services/database.dart';
 import 'package:panchat_plus/services/storage.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +27,7 @@ class _WrapperState extends State<Wrapper> {
     }
     else {
       return StreamBuilder(
-        stream: DatabaseService(path: Paths.people).watchPanchatUserInfo(field:PanchatUserInfo.nameUid, filter: loginInfo.uid),
+        stream: PanchatUserInfo().watchPanchatUserInfo(firestorePath: Paths.people, field:PanchatUserInfo.nameUid, filter: loginInfo.uid),
         builder: (context, AsyncSnapshot<PanchatUserInfo> panchatUser) {
           if (panchatUser.hasData) {
             return FutureBuilder(

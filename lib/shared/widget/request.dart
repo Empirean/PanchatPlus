@@ -34,7 +34,8 @@ class RequestTile extends StatelessWidget {
             String id = sid.data!.toString();
 
             return StreamBuilder(
-              stream: DatabaseService(path: Paths.people).watchPanchatUserInfo(
+              stream: PanchatUserInfo().watchPanchatUserInfo(
+                firestorePath: Paths.people,
                 field: PanchatUserInfo.nameUid,
                 filter: request.uid,
               ),

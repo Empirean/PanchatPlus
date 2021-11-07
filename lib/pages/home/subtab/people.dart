@@ -41,9 +41,10 @@ class _PeopleState extends State<People> {
                     List<String> friendsList = friends.data!.map((e) => e.uid).toList();
                     friendsList.add(loginInfo.uid);
                     return StreamBuilder(
-                      stream: DatabaseService(path: Paths.people).watchOtherPanchatUserInfoRange(
-                          field: PanchatFriend.uidName,
-                          filter: friendsList
+                      stream: PanchatUserInfo().watchOtherPanchatUserInfoRange(
+                        firestorePath: Paths.people,
+                        field: PanchatFriend.uidName,
+                        filter: friendsList
                       ),
                       builder: (context, AsyncSnapshot<List<PanchatUserInfo>> panchatUser) {
                         if (panchatUser.hasData) {

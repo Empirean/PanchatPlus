@@ -45,9 +45,7 @@ class _MessageTileState extends State<MessageTile> {
                   filter: _channelInfo.participants
                 ),
                 builder: (context, AsyncSnapshot<PanchatChannels> channel) {
-
                   if (channel.hasData) {
-
                     return StreamBuilder(
                         builder: (context, _) {
                           return Container();
@@ -55,10 +53,8 @@ class _MessageTileState extends State<MessageTile> {
                     );
                   }
                   else {
-
                     return Container();
                   }
-
                 },
               ),
               TextFormField(
@@ -68,7 +64,6 @@ class _MessageTileState extends State<MessageTile> {
               )
             ],
           )
-
         ],
       ),
     );

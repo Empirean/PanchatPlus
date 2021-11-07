@@ -38,7 +38,8 @@ class _ChatsState extends State<Chats> {
                     friendsList.add("");
 
                     return StreamBuilder(
-                      stream: DatabaseService(path: Paths.people).watchPanchatUserInfoRange(
+                      stream: PanchatUserInfo().watchPanchatUserInfoInRange(
+                        firestorePath: Paths.people,
                         field: PanchatUserInfo.nameUid,
                         filter: friendsList
                       ),
