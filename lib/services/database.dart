@@ -33,6 +33,10 @@ class DatabaseService{
   Stream<QuerySnapshot> watchAllDocuments() {
     return _ref.snapshots();
   }
+  
+  Stream<QuerySnapshot> watchAllDocumentsSorted({String field = "", bool descending = false}) {
+    return _ref.orderBy(field, descending: descending).snapshots();
+  }
 
   Stream<QuerySnapshot> watchDocumentsInRange({String field = "", List<String> filter = const []}) {
     return _ref.where(field, whereIn: filter, ).snapshots();

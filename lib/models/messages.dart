@@ -8,9 +8,9 @@ class PanchatMessage{
   //==========================================================================//
   final String sender;
   final String message;
-  final DateTime timestamp;
+  final DateTime? timestamp;
   final String id;
-  PanchatMessage({this.sender = "", this.message = "", required this.timestamp, this.id = ""});
+  PanchatMessage({this.sender = "", this.message = "", this.timestamp, this.id = ""});
 
   //==========================================================================//
   // FirebaseFirestore Attributes
@@ -22,16 +22,16 @@ class PanchatMessage{
   //==========================================================================//
   // FirebaseFirestore Functions
   //==========================================================================//
-  Stream<List<PanchatMessage>> watchAllMessages({String firestorePath = ""}) {
-    return DatabaseService(path: firestorePath).watchAllDocuments().map(_panchatMessageListFromStream);
+  Stream<List<PanchatMessage>> watchAllMessages({String firestorePath = "", String field = "", bool descending = false}) {
+    return DatabaseService(path: firestorePath).watchAllDocumentsSorted(field: field, descending: descending).map(_panchatMessageListFromStream);
   }
 
   List<PanchatMessage> _panchatMessageListFromStream(QuerySnapshot request) {
     return request.docs.map((doc) {
-      return PanchatMessage(
+      return  PanchatMessage(
           message: doc[PanchatMessage.messageName] ?? "",
           sender: doc[PanchatMessage.senderName] ?? "",
-          timestamp: doc[PanchatMessage.timestampName] ?? DateTime.now(),
+          timestamp: doc[PanchatMessage.timestampName].toDate() ?? DateTime.now(),
           id: doc.id
       );
     }).toList();
