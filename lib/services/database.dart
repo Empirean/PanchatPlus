@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:panchat_plus/models/friends.dart';
 import 'package:panchat_plus/models/messages.dart';
 import 'package:panchat_plus/models/request.dart';
 
@@ -33,7 +32,6 @@ class DatabaseService{
   //==========================================================================//
   // Fetching functions
   //==========================================================================//
-
   Stream<QuerySnapshot> watchAllDocuments() {
     return _ref.snapshots();
   }
@@ -52,20 +50,6 @@ class DatabaseService{
 
   Future<QuerySnapshot> getDocumentsAnyArray({String field = "", String filter = ""}) {
     return _ref.where(field, arrayContainsAny: [filter]).get();
-  }
-
-  //==========================================================================//
-
-  Stream<List<PanchatFriend>> watchAllFriends() {
-    return watchAllDocuments().map(_panchatFriendFromStream);
-  }
-
-  List<PanchatFriend> _panchatFriendFromStream(QuerySnapshot friend) {
-    return friend.docs.map((doc) {
-      return PanchatFriend(
-        uid: doc[PanchatFriend.uidName] ?? "",
-      );
-    }).toList();
   }
 
   //==========================================================================//

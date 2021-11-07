@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:panchat_plus/models/friends.dart';
 import 'package:panchat_plus/models/userinfo.dart';
 import 'package:panchat_plus/routes/paths.dart';
-import 'package:panchat_plus/services/database.dart';
 import 'package:panchat_plus/services/storage.dart';
 import 'package:panchat_plus/shared/styles/background.dart';
 import 'package:panchat_plus/shared/widget/people.dart';
@@ -35,7 +34,7 @@ class _PeopleState extends State<People> {
               String id = sid.data!.toString();
               String _path = Paths.people + "/$id/" + Paths.friends;
               return StreamBuilder(
-                stream: DatabaseService(path: _path).watchAllFriends(),
+                stream: PanchatFriend().watchAllFriends(firestorePath: _path),
                 builder: (context, AsyncSnapshot<List<PanchatFriend>> friends) {
                   if (friends.hasData) {
                     List<String> friendsList = friends.data!.map((e) => e.uid).toList();
