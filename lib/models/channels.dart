@@ -9,7 +9,8 @@ class PanchatChannels{
   final String channel;
   final String type;
   final String id;
-  PanchatChannels({this.type = "", this.id = "",this.participants = const [""], this.channel = ""});
+
+  PanchatChannels({this.type = "", this.id = "",this.participants = const [], this.channel = ""});
 
   //==========================================================================//
   // FirebaseFirestore Attributes

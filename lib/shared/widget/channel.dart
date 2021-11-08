@@ -20,7 +20,6 @@ class Channel extends StatefulWidget {
 
 class _ChannelState extends State<Channel> {
 
-  final String _title = "Chats";
   final _controller =  TextEditingController();
 
   late PanchatChannels _channelInfo;
@@ -36,7 +35,7 @@ class _ChannelState extends State<Channel> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: PanchatColors.mainColor,
-        title: Text(_title,
+        title: Text(_channelInfo.channel,
           style: PanchatAppBar.textStyle
         ),
       ),
@@ -48,63 +47,82 @@ class _ChannelState extends State<Channel> {
         ),
         builder: (context, AsyncSnapshot<PanchatChannels> channels) {
 
+
           if (channels.hasData) {
             String _path =  "${Paths.channels}/${channels.data!.id}/${Paths.messages}";
-            return Stack(
-              children: [
-                Container(
-                    decoration: PanchatBackground.gradient
-                ),
-                Column(
-                  children: [
-                    Expanded(
-                      flex: 9,
-                      child: StreamBuilder(
-                          stream: PanchatMessage().watchAllMessages(
-                              firestorePath: _path,
-                              field: PanchatMessage.timestampName,
-                              descending: false
-                          ),
-                          builder: (context, AsyncSnapshot<List<PanchatMessage>> messages) {
-                            if (messages.hasData) {
-                              return ListView.builder(
-                                  itemCount: messages.data!.length,
-                                  itemBuilder: (context, index) {
-                                    return MessageTile(message: messages.data![index]);
+
+            return StreamBuilder(
+              stream: PanchatUserInfo().watchPanchatUserInfoInRange(
+                field: PanchatUserInfo.nameUid,
+                firestorePath: Paths.people,
+                filter: _channelInfo.participants
+              ),
+              builder: (context, AsyncSnapshot<List<PanchatUserInfo>> participantsInfo) {
+                if (participantsInfo.hasData) {
+                  List<PanchatUserInfo>? participants = participantsInfo.data;
+                  return Stack(
+                    children: [
+                      Container(
+                          decoration: PanchatBackground.gradient
+                      ),
+                      Column(
+                        children: [
+                          Expanded(
+                            flex: 9,
+                            child: StreamBuilder(
+                                stream: PanchatMessage().watchAllMessages(
+                                    firestorePath: _path,
+                                    field: PanchatMessage.timestampName,
+                                    descending: false
+                                ),
+                                builder: (context, AsyncSnapshot<List<PanchatMessage>> messages) {
+                                  if (messages.hasData) {
+                                    return ListView.builder(
+                                        itemCount: messages.data!.length,
+                                        itemBuilder: (context, index) {
+                                          return MessageTile(
+                                            message: messages.data![index],
+                                            participants: participants,
+                                          );
+                                        }
+                                    );
                                   }
-                              );
-                            }
-                            else{
-                              return Container();
-                            }
-                          }
+                                  else{
+                                    return Container();
+                                  }
+                                }
+                            ),
+                          ),
+                          TextFormField(
+                            controller: _controller,
+                            onChanged: (val) {
+                              _message = val;
+                            },
+                            onEditingComplete: () async {
+
+                              Map<String, dynamic> data = {
+                                PanchatMessage.messageName : _message,
+                                PanchatMessage.timestampName : DateTime.now(),
+                                PanchatMessage.senderName : loginInfo.uid,
+                              };
+
+                              await DatabaseService(path: _path).addEntry(data);
+
+                              _controller.clear();
+                            },
+                            decoration: PanchatInputStyle.decoration.copyWith(
+                                hintText: "message"
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    TextFormField(
-                      controller: _controller,
-                      onChanged: (val) {
-                        _message = val;
-                      },
-                      onEditingComplete: () async {
-
-                        Map<String, dynamic> data = {
-                          PanchatMessage.messageName : _message,
-                          PanchatMessage.timestampName : DateTime.now(),
-                          PanchatMessage.senderName : loginInfo.uid,
-                        };
-
-                        await DatabaseService(path: _path).addEntry(data);
-
-                        _controller.clear();
-                      },
-                      decoration: PanchatInputStyle.decoration.copyWith(
-                          hintText: "message"
-                      ),
-                    )
-                  ],
-                ),
-
-              ],
+                    ],
+                  );
+                }
+                else {
+                  return Container();
+                }
+              }
             );
           }
           else {

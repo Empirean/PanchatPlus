@@ -27,7 +27,11 @@ class ChatTile extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           List<String> participants = [person.uid, loginInfo.uid];
-          Navigator.pushNamed(context, Routes.messages, arguments: PanchatChannels(participants: participants));
+          Navigator.pushNamed(context, Routes.messages, arguments:
+            PanchatChannels(
+              participants: participants,
+              channel: "${person.firstName} ${person.lastName}")
+          );
         },
         child: ListTile(
           leading: Image(
