@@ -21,6 +21,7 @@ class Channel extends StatefulWidget {
 class _ChannelState extends State<Channel> {
 
   final _controller =  TextEditingController();
+  final _scrollController = ScrollController();
 
   late PanchatChannels _channelInfo;
   late String _message;
@@ -51,78 +52,64 @@ class _ChannelState extends State<Channel> {
           if (channels.hasData) {
             String _path =  "${Paths.channels}/${channels.data!.id}/${Paths.messages}";
 
-            return StreamBuilder(
-              stream: PanchatUserInfo().watchPanchatUserInfoInRange(
-                field: PanchatUserInfo.nameUid,
-                firestorePath: Paths.people,
-                filter: _channelInfo.participants
-              ),
-              builder: (context, AsyncSnapshot<List<PanchatUserInfo>> participantsInfo) {
-                if (participantsInfo.hasData) {
-                  List<PanchatUserInfo>? participants = participantsInfo.data;
-                  return Stack(
-                    children: [
-                      Container(
-                          decoration: PanchatBackground.gradient
-                      ),
-                      Column(
-                        children: [
-                          Expanded(
-                            flex: 9,
-                            child: StreamBuilder(
-                                stream: PanchatMessage().watchAllMessages(
-                                    firestorePath: _path,
-                                    field: PanchatMessage.timestampName,
-                                    descending: false
-                                ),
-                                builder: (context, AsyncSnapshot<List<PanchatMessage>> messages) {
-                                  if (messages.hasData) {
-                                    return ListView.builder(
-                                        itemCount: messages.data!.length,
-                                        itemBuilder: (context, index) {
-                                          return MessageTile(
-                                            message: messages.data![index],
-                                            participants: participants,
-                                          );
-                                        }
+            return Stack(
+              children: [
+                Container(
+                    decoration: PanchatBackground.gradient
+                ),
+                Column(
+                  children: [
+                    Expanded(
+                      flex: 9,
+                      child: StreamBuilder(
+                          stream: PanchatMessage().watchAllMessages(
+                              firestorePath: _path,
+                              field: PanchatMessage.timestampName,
+                              descending: false
+                          ),
+                          builder: (context, AsyncSnapshot<List<PanchatMessage>> messages) {
+                            if (messages.hasData) {
+                              return ListView.builder(
+                                  controller: _scrollController,
+                                  itemCount: messages.data!.length,
+                                  itemBuilder: (context, index) {
+                                    return MessageTile(
+                                      message: messages.data![index],
                                     );
                                   }
-                                  else{
-                                    return Container();
-                                  }
-                                }
-                            ),
-                          ),
-                          TextFormField(
-                            controller: _controller,
-                            onChanged: (val) {
-                              _message = val;
-                            },
-                            onEditingComplete: () async {
-
-                              Map<String, dynamic> data = {
-                                PanchatMessage.messageName : _message,
-                                PanchatMessage.timestampName : DateTime.now(),
-                                PanchatMessage.senderName : loginInfo.uid,
-                              };
-
-                              await DatabaseService(path: _path).addEntry(data);
-
-                              _controller.clear();
-                            },
-                            decoration: PanchatInputStyle.decoration.copyWith(
-                                hintText: "message"
-                            ),
-                          )
-                        ],
+                              );
+                            }
+                            else{
+                              return Container();
+                            }
+                          }
                       ),
-                    ],
-                  );
-                }
-                else {
-                  return Container();
-                }
-              }
+                    ),
+                    TextFormField(
+                      controller: _controller,
+                      onChanged: (val) {
+                        _message = val;
+                      },
+                      onEditingComplete: () async {
+
+                        Map<String, dynamic> data = {
+                          PanchatMessage.messageName : _message,
+                          PanchatMessage.timestampName : DateTime.now(),
+                          PanchatMessage.senderName : loginInfo.uid,
+                        };
+
+                        await DatabaseService(path: _path).addEntry(data);
+
+                        _controller.clear();
+                        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+                      },
+                      decoration: PanchatInputStyle.decoration.copyWith(
+                          hintText: "message"
+                      ),
+                    )
+                  ],
+                ),
+              ],
             );
           }
           else {

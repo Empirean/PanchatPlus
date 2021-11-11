@@ -5,30 +5,23 @@ import 'package:panchat_plus/shared/styles/color.dart';
 import 'package:provider/provider.dart';
 
 class MessageTile extends StatelessWidget {
-  const MessageTile({Key? key, required this.message, this.participants}) : super(key: key);
+  const MessageTile({Key? key, required this.message}) : super(key: key);
 
   final PanchatMessage message;
-  final List<PanchatUserInfo>? participants;
 
   @override
   Widget build(BuildContext context) {
 
     final loginInfo = Provider.of<PanchatUserInfo>(context, listen: false);
 
-    PanchatUserInfo? user = participants![0].uid == loginInfo.uid ? participants![0] : participants![1];
-    PanchatUserInfo? sender = participants![0].uid != loginInfo.uid ? participants![0] : participants![1];
-
     return Row(
       children: [
         Expanded(
-          flex: 1,
+          flex: message.sender == loginInfo.uid ? 0 : 1,
           child: Visibility(
             visible: message.sender == loginInfo.uid ? false : true,
-            child: CircleAvatar(
-              backgroundColor: Colors.black,
-              child: Image(
-                image: AssetImage("assets/${user.image}"),
-              ),
+            child: const SizedBox(
+              width: 20,
             ),
           ),
         ),
@@ -53,15 +46,12 @@ class MessageTile extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 1,
+          flex: message.sender == loginInfo.uid ? 1 : 0,
           child: Visibility(
             visible: message.sender == loginInfo.uid ? true : false,
-            child: CircleAvatar(
-                backgroundColor: Colors.black,
-                child: Image(
-                  image: AssetImage("assets/${sender.image}"),
-                ),
-              ),
+            child: const SizedBox(
+              width: 20,
+            ),
           ),
         ),
       ],
