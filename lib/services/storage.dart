@@ -12,4 +12,15 @@ class LocalStorage {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(PanchatKeys.keyUid) ?? "";
   }
+
+  Future storeDeviceToken(String id) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(PanchatKeys.keyToken, id);
+    return true;
+  }
+
+  Future<String> getDeviceToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(PanchatKeys.keyToken) ?? "";
+  }
 }
